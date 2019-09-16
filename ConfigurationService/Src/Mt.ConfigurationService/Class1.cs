@@ -1,8 +1,3 @@
-﻿using System;
+﻿using System.Runtime.CompilerServices;
 
-namespace Mt.ConfigurationService
-{
-   public class Class1
-   {
-   }
-}
+[assembly: InternalsVisibleTo("Mt.ConfigurationService.UnitTests")]
