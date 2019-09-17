@@ -1,16 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.Configuration;
+using Mt.ConfigurationService.Domain.Helpers;
 using Mt.ConfigurationService.Interfaces.Helpers;
 
 namespace Mt.ConfigurationService.Services.Helpers
 {
-   internal class ConnectionStringsProvider : IConnectionStringsProvider
+   internal class ConnectionStringsProvider : IConfigItemsProvider<ConnectionString>
    {
-      public IDictionary<string, string> GetConnectionStrings()
+      public IEnumerable<ConnectionString> Get()
       {
          var connectionStrings = ConfigurationManager.ConnectionStrings;
 
-         var result = new Dictionary<string, string>(connectionStrings.Count);
+         var result = new List<ConnectionString>(connectionStrings.Count);
 
          for (var i = 0; i < connectionStrings.Count; i++)
          {
@@ -20,7 +21,7 @@ namespace Mt.ConfigurationService.Services.Helpers
 
             var value = connectionStringSettings.ConnectionString;
 
-            result.Add(key, value);
+            result.Add(new ConnectionString {Name = key, Value = value});
          }
 
          return result;
