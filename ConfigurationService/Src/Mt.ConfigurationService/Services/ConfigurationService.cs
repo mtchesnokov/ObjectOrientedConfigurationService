@@ -14,6 +14,11 @@ namespace Mt.ConfigurationService.Services
 
       #region ctor
 
+      public ConfigurationService() : this(new ConnectionStringProvider(), new AppSettingProvider(), new AppSettingValueParseService())
+      {
+         
+      }
+
       internal ConfigurationService(IConfigItemProvider<ConnectionString> connectionStringProvider, IConfigItemProvider<AppSetting> appSettingProvider, IAppSettingValueParseService appSettingValueParseService)
       {
          _connectionStringProvider = connectionStringProvider;

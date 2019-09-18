@@ -6,13 +6,13 @@ using Mt.ConfigurationService.Interfaces.Helpers;
 
 namespace Mt.ConfigurationService.Services.Helpers
 {
-   internal class ConfigItemProvider<TConfigItem> : IConfigItemProvider<TConfigItem> where TConfigItem : ConfigItemBase
+   internal abstract class ConfigItemProviderBase<TConfigItem> : IConfigItemProvider<TConfigItem> where TConfigItem : ConfigItemBase
    {
       private readonly IConfigItemsProvider<TConfigItem> _configItemsProvider;
 
       #region ctor
 
-      public ConfigItemProvider(IConfigItemsProvider<TConfigItem> configItemsProvider)
+      public ConfigItemProviderBase(IConfigItemsProvider<TConfigItem> configItemsProvider)
       {
          _configItemsProvider = configItemsProvider;
       }
