@@ -3,7 +3,7 @@ using Mt.ConfigurationService.Interfaces.Helpers;
 using Mt.ConfigurationService.UnitTests.TestExtensions;
 using NUnit.Framework;
 
-namespace Mt.ConfigurationService.UnitTests.UseCases.ConnectionStringProvider
+namespace Mt.ConfigurationService.UnitTests.UseCases.AppSettingProvider
 {
    public class HappyTests : TestBase
    {
@@ -11,16 +11,16 @@ namespace Mt.ConfigurationService.UnitTests.UseCases.ConnectionStringProvider
       public void HappyCase()
       {
          //arrange
-         var sut = Container.GetInstance<IConfigItemsProvider<ConnectionString>>();
+         var sut = Container.GetInstance<IConfigItemProvider<AppSetting>>();
 
          //act
-         var appSettings = sut.GetAll();
+         var appSetting = sut.Get("appSetting1");
 
          //assert
-         Assert.IsNotNull(appSettings);
+         Assert.IsNotNull(appSetting);
 
          //print 
-         appSettings.Print();
+         appSetting.Print();
       }
    }
 }

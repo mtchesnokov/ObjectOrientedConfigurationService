@@ -9,6 +9,7 @@ namespace Mt.ConfigurationService.UnitTests
    {
       public MasterRegistry()
       {
+         For(typeof(IConfigItemProvider<>)).Use(typeof(ConfigItemProvider<>));
          For<IConfigItemsProvider<AppSetting>>().Use<AppSettingsProvider>();
          For<IConfigItemsProvider<ConnectionString>>().Use<ConnectionStringsProvider>();
       }

@@ -6,6 +6,6 @@ namespace Mt.ConfigurationService.Interfaces.Helpers
    internal interface IConfigItemsProvider<TConfigItem>
       where TConfigItem : ConfigItemBase
    {
-      IEnumerable<TConfigItem> Get();
+      IEnumerable<TConfigItem> GetAll();
    }
 }

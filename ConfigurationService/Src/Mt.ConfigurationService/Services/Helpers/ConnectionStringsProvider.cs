@@ -7,7 +7,7 @@ namespace Mt.ConfigurationService.Services.Helpers
 {
    internal class ConnectionStringsProvider : IConfigItemsProvider<ConnectionString>
    {
-      public IEnumerable<ConnectionString> Get()
+      public IEnumerable<ConnectionString> GetAll()
       {
          var connectionStrings = ConfigurationManager.ConnectionStrings;
 

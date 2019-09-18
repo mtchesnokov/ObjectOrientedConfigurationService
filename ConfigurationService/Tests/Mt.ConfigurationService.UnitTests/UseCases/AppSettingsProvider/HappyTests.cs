@@ -14,7 +14,7 @@ namespace Mt.ConfigurationService.UnitTests.UseCases.AppSettingsProvider
          var sut = Container.GetInstance<IConfigItemsProvider<AppSetting>>();
 
          //act
-         var appSettings = sut.Get();
+         var appSettings = sut.GetAll();
 
          //assert
          Assert.IsNotNull(appSettings);

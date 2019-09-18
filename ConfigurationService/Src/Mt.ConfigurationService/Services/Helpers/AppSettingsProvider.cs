@@ -7,7 +7,7 @@ namespace Mt.ConfigurationService.Services.Helpers
 {
    internal class AppSettingsProvider : IConfigItemsProvider<AppSetting>
    {
-      public IEnumerable<AppSetting> Get()
+      public IEnumerable<AppSetting> GetAll()
       {
          var appSettings = ConfigurationManager.AppSettings;
 

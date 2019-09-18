@@ -41,7 +41,10 @@
     <Compile Include="MasterRegistry.cs" />
     <Compile Include="TestBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestExtensions\MyAssert.cs" />
     <Compile Include="TestExtensions\PrintExtension.cs" />
+    <Compile Include="UseCases\AppSettingProvider\HappyTests.cs" />
+    <Compile Include="UseCases\AppSettingProvider\UnhappyTests.cs" />
     <Compile Include="UseCases\ConnectionStringProvider\HappyTests.cs" />
     <Compile Include="UseCases\AppSettingsProvider\HappyTests.cs" />
   </ItemGroup>

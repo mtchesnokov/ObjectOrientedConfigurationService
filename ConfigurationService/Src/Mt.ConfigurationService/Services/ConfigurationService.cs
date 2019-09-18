@@ -1,31 +1,58 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Reflection;
+﻿using Mt.ConfigurationService.Domain.Helpers;
 using Mt.ConfigurationService.Interfaces;
+using Mt.ConfigurationService.Interfaces.Helpers;
 using Mt.ConfigurationService.Services.Helpers;
 
 namespace Mt.ConfigurationService.Services
 {
-   public class ConfigurationService<T> : IConfigurationService<T> 
+   public class ConfigurationService<T> : IConfigurationService<T>
       where T : new()
    {
-      public T Get()
+      private readonly IConfigItemProvider<ConnectionString> _connectionStringProvider;
+      private readonly IConfigItemProvider<AppSetting> _appSettingProvider;
+      private readonly IAppSettingValueParseService _appSettingValueParseService;
+
+      #region ctor
+
+      internal ConfigurationService(IConfigItemProvider<ConnectionString> connectionStringProvider, IConfigItemProvider<AppSetting> appSettingProvider, IAppSettingValueParseService appSettingValueParseService)
       {
-         var type = typeof(T);
-         var typeDescriptor = type.GetTypeDescriptor();
-
-         var connectionStrings = typeDescriptor.ConnectionStrings;
-
-         var result = new T();
-
-         AddConnectionStrings(result, connectionStrings);
-
-         return result;
+         _connectionStringProvider = connectionStringProvider;
+         _appSettingProvider = appSettingProvider;
+         _appSettingValueParseService = appSettingValueParseService;
       }
 
-      private static void AddConnectionStrings(T result, List<Tuple<string, PropertyInfo>> connectionStrings)
+      #endregion
+
+      public T Get()
       {
-         throw new NotImplementedException();
+         var result = new T();
+
+         var resultType = result.GetType();
+
+         var publicProperties = resultType.GetPublicProperties();
+
+         foreach (var propertyInfo in publicProperties)
+         {
+            var connectionStringName = propertyInfo.TryGetConnectionStringName();
+
+            if (!string.IsNullOrEmpty(connectionStringName))
+            {
+               var connectionString = _connectionStringProvider.Get(connectionStringName);
+               propertyInfo.SetValue(result, connectionString);
+               continue;
+            }
+
+            var appSettingName = propertyInfo.TryGetAppSettingName();
+
+            if (!string.IsNullOrEmpty(appSettingName))
+            {
+               var appSettingStringValue = _appSettingProvider.Get(appSettingName);
+               var propertyValue = _appSettingValueParseService.Parse(appSettingStringValue, propertyInfo.PropertyType);
+               propertyInfo.SetValue(result, propertyValue);
+            }
+         }
+
+         return result;
       }
    }
 }
